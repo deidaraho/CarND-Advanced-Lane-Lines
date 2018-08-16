@@ -27,7 +27,7 @@ The goals / steps of this project are the following:
 [image6]: ./output_images/window_polyfit.png "Window Polyfit"
 [image7]: ./output_images/window_prefit.png "Pre-Polyfit"
 [image8]: ./output_images/draw_data.png "Draw with Radius"
-[video1]: ./project_video.mp4 "Video"
+[video1]: ./project_video_output.mp4 "Video"
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/571/view) Points
 
@@ -134,7 +134,7 @@ I implemented this step in Cell 55 through 58 in my code in `pipeline.ipynb` in 
 
 #### 1. Provide a link to your final video output.  Your pipeline should perform reasonably well on the entire project video (wobbly lines are ok but no catastrophic failures that would cause the car to drive off the road!).
 
-Here's a [link to my video result](./project_video.mp4)
+Here's a [link to my video result](./project_video_output.mp4)
 
 ---
 
