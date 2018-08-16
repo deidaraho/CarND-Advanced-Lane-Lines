@@ -55,14 +55,15 @@ Thus, `objp` is just a replicated array of coordinates, and `objpoints` will be 
 I then used the output `objpoints` and `imgpoints` to compute the camera calibration and distortion coefficients using the `cv2.calibrateCamera()` function.  
 I applied this distortion correction to the test image using the `cv2.undistort()` function and obtained this result below, where the left is original and the right is undistored by calibration.
 
-[calibration][image1]
+![calibration][image1]
 
 ### Pipeline (single images)
 
 #### 1. Provide an example of a distortion-corrected image.
 
 To demonstrate this step, I will describe how I apply the distortion correction to one of the test images like this one below, where the left is original camera view and the right is the undistorted.
-[Road Transformed][image2]
+
+![Road Transformed][image2]
 
 The demo picture above shows the difference between original and undistorted is tiny, however, the lane finding performance is improved by calibration.
 
@@ -71,14 +72,17 @@ The demo picture above shows the difference between original and undistorted is 
 I used a combination of color and gradient thresholds to generate a binary image (thresholding steps at IN Section 8 through 24 in `pipeline.ipynb`).  Here's an example of my output for this step.  
 
 Firstly, I transform to the bird eye view in front of the car as following,
-[Bird Eye][image3]
+
+![Bird Eye][image3]
 
 Then, I tried the lane selection and segmentation performance in RGB, HSV and LAB channels, following are the related channel transforms from the same bird-view image,
-[RGB-HSV-LAB Channels][image4]
+
+![RGB-HSV-LAB Channels][image4]
 
 After tuning threshold parameters and testing, I decided to use HLS L-channel and LAB B-channel for lane segmentation.
 Following are the selection performance in testing images.
-[Lane Binary Mask on Testing Images][image5]
+
+![Lane Binary Mask on Testing Images][image5]
 
 #### 3. Describe how (and identify where in your code) you performed a perspective transform and provide an example of a transformed image.
 
@@ -97,7 +101,8 @@ dst = np.float32([(450, 0),
 
 
 I verified that my perspective transform was working as expected by drawing the `src` and `dst` points onto a test image and its warped counterpart to verify that the lines appear parallel in the warped image.
-[Bird Eye][image3]
+
+![Bird Eye][image3]
 
 #### 4. Describe how (and identify where in your code) you identified lane-line pixels and fit their positions with a polynomial?
 
@@ -105,10 +110,12 @@ The functions "sliding_window_polyfit" and "polyfit_using_prev_fit", which ident
 The first of these computes a histogram of the bottom half of the image and finds the bottom-most x position (or "base") of the left and right lane lines. 
 Originally these locations were identified from the local maxima of the left and right halves of the histogram, but in my final implementation I changed these to quarters of the histogram just left and right of the midpoint. This helped to reject lines from adjacent lanes. 
 The function then identifies ten windows from which to identify lane pixels, each one centered on the midpoint of the pixels from the window below. This effectively "follows" the lane lines up to the top of the binary image, and speeds processing by only searching for activated pixels over a small portion of the image. Pixels belonging to each lane line are identified and the Numpy polyfit() method fits a second order polynomial to each set of pixels. The image below demonstrates how this process works:
-[Window Polyfit][image6]
+
+![Window Polyfit][image6]
 
 The "polyfit_using_prev_fit" function performs basically the same task, but alleviates much difficulty of the search process by leveraging a previous fit (from a previous video frame, for example) and only searching for lane pixels within a certain range of that fit. The image below demonstrates this - the green shaded area is the range from the previous fit, and the yellow lines and red and blue pixels are from the current image:
-[Pre-Polyfit][image7]
+
+![Pre-Polyfit][image7]
 
 
 #### 5. Describe how (and identify where in your code) you calculated the radius of curvature of the lane and the position of the vehicle with respect to center.
@@ -119,7 +126,7 @@ I did this in Cell 53 through 54 in my code in 'pipeline.ipynb'. The euqations a
 
 I implemented this step in Cell 55 through 58 in my code in `pipeline.ipynb` in the function `draw_lane()` and 'draw_data()'.  Here is an example of my result with estimated radius on a test image:
 
-[Lane with Radius][image8]
+![Lane with Radius][image8]
 
 ---
 
